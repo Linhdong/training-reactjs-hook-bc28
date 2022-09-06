@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { clear } from "@testing-library/user-event/dist/clear";
+
 
 let timeout = {};
 export default function UseEffectDemo() {

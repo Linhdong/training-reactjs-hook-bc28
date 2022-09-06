@@ -8,19 +8,31 @@ import UseStateDemo from "./pages/HooksDemo/UseStateDemo/UseStateDemo";
 import UseStateCarDemo from "./pages/HooksDemo/UseStateDemo/UseStateCarDemo";
 import UseEffectDemo from "./pages/HooksDemo/UseEffectDemo/UseEffectDemo";
 import UseCallBackDemo from "./pages/HooksDemo/UseCallBackDemo/UseCallBackDemo";
-
+import UseMemoDemo from "./pages/HooksDemo/UseMemoDemo/UseMemoDemo";
+import UseRefDemo from "./pages/HooksDemo/UserRefDemo/UseRefDemo";
+//Setup Redux
+import { Provider } from "react-redux";
+import { store } from "./redux/configStore";
+import DemoNumber from "./pages/HooksDemo/UseRedux/DemoNumber";
+import { DemoFacebookApp } from "./pages/HooksDemo/UseRedux/DemoFacebookApp/DemoFacebookApp";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="" element={<App />}>
-        <Route path="usestate" element={<UseStateDemo />}></Route>
-        <Route path="cardemo" element={<UseStateCarDemo />}></Route>
-        <Route path="useeffect" element={<UseEffectDemo/>}></Route>
-        <Route path="usecallback" element={<UseCallBackDemo/>}></Route>
-      </Route>
-    </Routes>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<App />}>
+          <Route path="usestate" element={<UseStateDemo />}></Route>
+          <Route path="cardemo" element={<UseStateCarDemo />}></Route>
+          <Route path="useeffect" element={<UseEffectDemo />}></Route>
+          <Route path="usecallback" element={<UseCallBackDemo />}></Route>
+          <Route path="usememo" element={<UseMemoDemo />}></Route>
+          <Route path="useref" element={<UseRefDemo />}></Route>
+          <Route path="reduxnumber" element={<DemoNumber/>}></Route>
+          <Route path="facebookappdemo" element={<DemoFacebookApp/>}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

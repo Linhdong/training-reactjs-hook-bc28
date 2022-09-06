@@ -41,14 +41,40 @@ export default function HeaderComponent() {
                 DemoHook 
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownId">
-                <NavLink className="dropdown-item" to="usestate">
+                <NavLink className="dropdown-item" to="/usestate">
                   useStateDemo
                 </NavLink>
-                <NavLink className="dropdown-item" to="useeffect">
+                <NavLink className="dropdown-item" to="/useeffect">
                   UseEffectDemo
                 </NavLink>
-                <NavLink className="dropdown-item" to="usecallback">
+                <NavLink className="dropdown-item" to="/usecallback">
                   UseCallBackDemo
+                </NavLink>
+                <NavLink className="dropdown-item" to="/usememo">
+                  UseMemoDemo
+                </NavLink>
+                <NavLink className="dropdown-item" to="/useref">
+                  UseRefDemo
+                </NavLink>
+              </div>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="dropdownId"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Redux Hook 
+              </a>
+              <div className="dropdown-menu" aria-labelledby="dropdownId">
+                <NavLink className="dropdown-item" to="/reduxnumber">
+                  Demo Number
+                </NavLink>
+                <NavLink className="dropdown-item" to="/facebookappdemo">
+                  Demo Facebook App
                 </NavLink>
               </div>
             </li>
