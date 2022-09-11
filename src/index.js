@@ -15,12 +15,23 @@ import { Provider } from "react-redux";
 import { store } from "./redux/configStore";
 import DemoNumber from "./pages/HooksDemo/UseRedux/DemoNumber";
 import { DemoFacebookApp } from "./pages/HooksDemo/UseRedux/DemoFacebookApp/DemoFacebookApp";
+import ReactForm from "./pages/HookRoutes/ReactForm/ReactForm";
+import Profile from "./pages/HookRoutes/ReactForm/Profile";
+import Home from "./pages/Home/Home";
+import Detail from "./pages/Detail/Detail";
+import DemoUseRoute from "./pages/DemoUseRoute/DemoUseRoute";
+import DemoAnimation from "./pages/DemoAnimation/DemoAnimation";
+import Search from "./pages/Seach/Search";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="" element={<App />}>
+          <Route index element={<Home/>}></Route>
+          <Route path="detail">
+            <Route path=":id" element={<Detail/>}></Route>
+          </Route>
           <Route path="usestate" element={<UseStateDemo />}></Route>
           <Route path="cardemo" element={<UseStateCarDemo />}></Route>
           <Route path="useeffect" element={<UseEffectDemo />}></Route>
@@ -29,6 +40,11 @@ root.render(
           <Route path="useref" element={<UseRefDemo />}></Route>
           <Route path="reduxnumber" element={<DemoNumber/>}></Route>
           <Route path="facebookappdemo" element={<DemoFacebookApp/>}></Route>
+          <Route path="reactform" element={<ReactForm/>}></Route>
+          <Route path="profile" element={<Profile/>}></Route>
+          <Route path="search" element={<Search/>}></Route>
+          <Route path="customhook" element={<DemoUseRoute/>}></Route>
+          <Route path="aniamtion" element={<DemoAnimation/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
