@@ -22,6 +22,7 @@ import Detail from "./pages/Detail/Detail";
 import DemoUseRoute from "./pages/DemoUseRoute/DemoUseRoute";
 import DemoAnimation from "./pages/DemoAnimation/DemoAnimation";
 import Search from "./pages/Seach/Search";
+import Login from "./pages/Login/Login";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
@@ -45,6 +46,7 @@ root.render(
           <Route path="search" element={<Search/>}></Route>
           <Route path="customhook" element={<DemoUseRoute/>}></Route>
           <Route path="aniamtion" element={<DemoAnimation/>}></Route>
+          <Route path="login" element={<Login/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
