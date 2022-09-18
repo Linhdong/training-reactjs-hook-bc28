@@ -60,7 +60,7 @@ root.render(
           <Route path="*" element={<Navigate to={'/'}/>}></Route>
           <Route path="demohoc" element={<DemoHoc/>}></Route>
           <Route path="users" element={<AdminTemplate component={UserManagement}/>}></Route>
-          <Route path="product" element={<AdminTemplate component={ProductManagement}/>}></Route>
+          <Route path="products" element={<AdminTemplate component={ProductManagement}/>}></Route>
         </Route>
       </Routes>
     </HistoryRouter>
