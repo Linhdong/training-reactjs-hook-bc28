@@ -18,7 +18,7 @@ export default function Profile(props) {
   //?: optional chaining: nếu như object có thuộc tính đó thì xử lý, ngược lại không có thuộc tính đó (undefine) bỏ qua
 
   const renderOrderHistory = () => {
-    return userLogin.ordersHistory?.map((order,index) => {
+    return userLogin?.ordersHistory?.map((order,index) => {
       return <div className='orderDetail' key={index}>
           <h3>Order Detail {moment(order.date).format('DD/MM/YYYY hh:mm:ss A')}</h3>
           <table className='table'>
@@ -33,7 +33,7 @@ export default function Profile(props) {
                 </tr>
               </thead>
               <tbody>
-                {order.orderDetail.map((item, index) => {
+                {order?.orderDetail.map((item, index) => {
                   return <tr key={index}>
                       <td>{item.id}</td>
                       <td>{item.name}</td>

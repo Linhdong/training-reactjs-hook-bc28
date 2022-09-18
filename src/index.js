@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import UseStateDemo from "./pages/HooksDemo/UseStateDemo/UseStateDemo";
 import UseStateCarDemo from "./pages/HooksDemo/UseStateDemo/UseStateCarDemo";
 import UseEffectDemo from "./pages/HooksDemo/UseEffectDemo/UseEffectDemo";
@@ -23,10 +23,20 @@ import DemoUseRoute from "./pages/DemoUseRoute/DemoUseRoute";
 import DemoAnimation from "./pages/DemoAnimation/DemoAnimation";
 import Search from "./pages/Seach/Search";
 import Login from "./pages/Login/Login";
+
+//Tạo ra 1 biến để quản lý chuyển hướng trang
+import { createBrowserHistory } from 'history';
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import DemoHoc from "./pages/DemoHoc/DemoHoc";
+import AdminTemplate from "./templates/AdminTemplate";
+import UserManagement from "./pages/Admin/UserManagement/UserManagement";
+import ProductManagement from "./pages/Admin/ProductManagement/ProductManagement";
+
+export const history = createBrowserHistory();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path="" element={<App />}>
           <Route index element={<Home/>}></Route>
@@ -42,14 +52,18 @@ root.render(
           <Route path="reduxnumber" element={<DemoNumber/>}></Route>
           <Route path="facebookappdemo" element={<DemoFacebookApp/>}></Route>
           <Route path="reactform" element={<ReactForm/>}></Route>
-          <Route path="profile" element={<Profile/>}></Route>
           <Route path="search" element={<Search/>}></Route>
           <Route path="customhook" element={<DemoUseRoute/>}></Route>
           <Route path="aniamtion" element={<DemoAnimation/>}></Route>
           <Route path="login" element={<Login/>}></Route>
+          <Route path="profile" element={<Profile/>}></Route>
+          <Route path="*" element={<Navigate to={'/'}/>}></Route>
+          <Route path="demohoc" element={<DemoHoc/>}></Route>
+          <Route path="users" element={<AdminTemplate component={UserManagement}/>}></Route>
+          <Route path="product" element={<AdminTemplate component={ProductManagement}/>}></Route>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   </Provider>
 );
 

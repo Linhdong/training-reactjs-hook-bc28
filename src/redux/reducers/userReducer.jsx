@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { ACCESS_TOKEN, getStore, getStoreJSON, setCookie, setStore, setStoreJSON, USER_LOGIN } from '../../util/config';
+import {history} from './../../index.js'
+
+import { ACCESS_TOKEN, getStore, getStoreJSON, http, setCookie, setStore, setStoreJSON, USER_LOGIN } from '../../util/config';
 
 const initialState = {
     userLogin: getStoreJSON(USER_LOGIN)
@@ -26,11 +28,7 @@ export const signinApi = (userLogin) => {
     //userLogin = {email: '', password: ''}
     return async dispatch => {
         try{
-            let result = await axios({
-                url: 'https://shop.cyberlearn.vn/api/Users/signin',
-                method: 'POST',
-                data: userLogin //{email: '' , password: ''}
-            });
+            let result = await http.post('/Users/signin',userLogin);
             //Thanh cong 
             //Luu lai Token
             setStore(ACCESS_TOKEN, result.data.content.accessToken);
@@ -42,8 +40,10 @@ export const signinApi = (userLogin) => {
             //result.data.content = {email: '' , accessToken: ''}
             const action = setUserLoginAction(result.data.content);
             dispatch(action);
+            history.push('/profile');
         }catch(err){
             console.log(err);
+            history.push('/login');
         }
 
     }
@@ -52,18 +52,14 @@ export const signinApi = (userLogin) => {
 export const getProfileApi = () => {
     return async dispatch => {
         try{
-            let result = await axios({
-                url: 'https://shop.cyberlearn.vn/api/Users/getProfile',
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${getStore(ACCESS_TOKEN)}`
-                }
-            });
+            let result = await http.post('/users/getprofile');
             console.log('Result: ', result.data.content);
             //Tao actioncreater => dispatch len redux
             const action = setUserLoginAction(result.data.content);
             dispatch(action);
         }catch(err){
+            alert('Đăng nhập để vào trang này !');
+            history.push('/login');
             console.log(err);
         }
     }

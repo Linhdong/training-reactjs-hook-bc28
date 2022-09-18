@@ -1,20 +1,50 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  ACCESS_TOKEN,
+  clearCookie,
+  clearLocalStorage,
+  USER_LOGIN,
+} from "../../util/config";
 
 export default function HeaderComponent() {
   const navigate = useNavigate();
-  const {userLogin} = useSelector(state => state.userReducer);
+  const { userLogin } = useSelector((state) => state.userReducer);
   const renderNavLink = () => {
-    if(userLogin){
-      return <NavLink className="nav-link" to="/profile">
-        Hello ! {userLogin.email}
-      </NavLink>
+    if (userLogin) {
+      return (
+        <>
+        <li>
+          <NavLink className="nav-link" to="/profile">
+            Hello ! {userLogin.email}
+          </NavLink>
+        </li>
+        <li>
+          <span
+            className="nav-link"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              clearLocalStorage(USER_LOGIN);
+              clearLocalStorage(ACCESS_TOKEN);
+              clearCookie(ACCESS_TOKEN);
+              //F5 lai trang
+              //window.location.reload(); //C1: reload lai trang
+              window.location.href = '/login' //C2: reload lai trang va clear all redux tren store
+            }}
+          >
+            SignOut
+          </span>
+          </li>
+        </>
+      );
     }
-    return <NavLink className="nav-link" to="/login">
-      Login
-    </NavLink>
-  }
+    return (
+      <NavLink className="nav-link" to="/login">
+        Login
+      </NavLink>
+    );
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark text-white">
@@ -37,9 +67,12 @@ export default function HeaderComponent() {
                 Home <span className="visually-hidden">(current)</span>
               </NavLink>
             </li>
-            <li className="nav-item">
-              {renderNavLink()}
+            <li className="nav-item active">
+              <NavLink className="nav-link" to="/demohoc">
+                Demo Hoc
+              </NavLink>
             </li>
+            {renderNavLink()}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -49,7 +82,7 @@ export default function HeaderComponent() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                DemoHook 
+                DemoHook
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownId">
                 <NavLink className="dropdown-item" to="/usestate">
@@ -84,7 +117,7 @@ export default function HeaderComponent() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Redux Hook 
+                Redux Hook
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownId">
                 <NavLink className="dropdown-item" to="/reduxnumber">
@@ -104,7 +137,7 @@ export default function HeaderComponent() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Router Hook 
+                Router Hook
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownId">
                 <NavLink className="dropdown-item" to="/reactform">
@@ -113,11 +146,14 @@ export default function HeaderComponent() {
               </div>
             </li>
           </ul>
-          <form className="d-flex my-2 my-lg-0" onSubmit={(e) => {
-            e.preventDefault(); 
-              const keyword = document.querySelector('#keyword').value;
-              navigate(`/search?keyword= ${keyword}`)
-          }}>
+          <form
+            className="d-flex my-2 my-lg-0"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const keyword = document.querySelector("#keyword").value;
+              navigate(`/search?keyword= ${keyword}`);
+            }}
+          >
             <input
               className="form-control me-sm-2"
               type="text"

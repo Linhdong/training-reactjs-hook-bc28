@@ -1,3 +1,5 @@
+import axios from "axios";
+import {history} from './../index.js'
 export const configs = {
     setStore: (name,value) => {
         localStorage.setItem(name,value);
@@ -37,9 +39,65 @@ export const configs = {
         }
         return null;
     },
+    clearCookie: (name) => {
+        setCookie('',-1,name);
+    },
+    clearLocalStorage: (name) => {
+        localStorage.removeItem(name);
+    }
+    ,
     ACCESS_TOKEN: 'accessToken',
     USER_LOGIN: 'userLogin'
 
 }
 
-export const {getCookie, setCookie, setStore, getStore, setStoreJSON, getStoreJSON, ACCESS_TOKEN, USER_LOGIN} = configs;
+export const {getCookie, setCookie, setStore, getStore, setStoreJSON, getStoreJSON, clearCookie, clearLocalStorage, ACCESS_TOKEN, USER_LOGIN} = configs;
+const TOKEN_CYBERSOFT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAyOCIsIkhldEhhblN0cmluZyI6IjI1LzAyLzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY3NzI4MzIwMDAwMCIsIm5iZiI6MTY0Nzk2ODQwMCwiZXhwIjoxNjc3NDMwODAwfQ.wEdmkKpVZbDB4s4L_cmLwJ1O8le8Cc-VMgLZCI-HvLA';
+
+//Cấu hình intercepter (cấu hình cho các request và response)
+export const http = axios.create({
+    baseURL: `https://shop.cyberlearn.vn/api`,
+    timeout: 6000
+});
+
+//Cấu hình request 
+http.interceptors.request.use((configs) => {
+    configs.headers = {
+        ...configs.headers,
+        ['Authorization']: `Bearer ${getStore(ACCESS_TOKEN)}`,
+        ['TokenCybersoft']: TOKEN_CYBERSOFT
+    }
+    return configs;
+
+}, (err) => {
+    return Promise.reject(err);
+})
+
+/**
+ *  statuscode: mã kết quả trả về do backend quy định 
+ *  200 (Success): kết quả trả về thành công 
+ *  201 (Created): tạo giá trị thành công trên server (không dùng 208)
+ *  400(BadRequest) : Không tồn tại đường dẫn 
+ *  404(Not Found): Không tim thấy dữ liệu 
+ *  401(UnAuthorize) : Không có quyền truy cập vào API
+ *  403 (Forbiden): Token chưa đủ quyền truy cập
+ *  500(Error in Server): Lỗi xảy ra trên server (Nguyên nhân có thể do fontedn hoặc backend tùy tình huống)
+ *  
+ */
+
+http.interceptors.response.use((response) => {
+    console.log(response);
+    return response;
+}, err => {
+    //const originalRequest  = error.config;
+    console.log(err.response.status);
+    if(err.response.status === 400 || err.response.status === 404){
+        history.push('/');
+        return Promise.reject(err);
+    }
+    if(err.response.status === 401 || err.response.status === 403){
+        alert('Token khong hop le ! Vui long dang nhap lai !');
+        history.push('/login');
+        return Promise.reject(err);
+    }
+})
